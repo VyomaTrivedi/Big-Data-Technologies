@@ -1,0 +1,51 @@
+To run any jar file first go to the directory having the jar (on your local machine)
+
+And you need to put the files 
+   business.csv 
+   review.csv 
+   user.csv 
+   soc-LiveJournal1Adj.txt (test.text in the commands used to run my code)
+in the hadoop system using the command
+
+hdfs dfs -put /home/vyoma/Documents/business.csv /user/vyoma 
+
+where the first argument is the path to that file on the local machine and the second argument is the location on hadoop system where you want to store that file
+
+1) find mutual friends using map reduce.
+hadoop jar mutualFriends.jar /user/vyoma/test.txt /user/vyoma/outMutualFriends
+
+	input file : /user/vyoma/test.txt			-- the location of the input file on your hadoop system
+	output file : /user/vyoma/outMutualFriends		-- the location where you want to store your output file on the hadoop system
+
+   hdfs dfs -get /user/vyoma/outMutualFriends 			-- this command will get the output file to your local system in the same directory as 									   your jar from where you can view the output
+
+	Note : Running this code will produce output for the 5 pairs specified in the question. To see the output for any other pair please refer the 		       comments in the code
+
+2) find top 10 mutual friends using map reduce.
+hadoop jar topMutualFriends.jar /user/vyoma/test.txt /user/vyoma/outTop10MutualFriends
+
+	input file : /user/vyoma/test.txt			-- the location of the input file on your hadoop system
+	output file : /user/vyoma/outTop10MutualFriends		-- the location where you want to store your output file on the hadoop system
+
+   hdfs dfs -get /user/vyoma/outTop10MutualFriends 		-- this command will get the output file to your local system in the same 									   directory as your jar from where you can view the output
+
+
+3) The yelp top 10 is implemented using reduce side join and job chaining.
+hadoop jar topBusiness.jar /user/vyoma/review.csv /user/vyoma/business.csv /user/vyoma/temp /user/vyoma/outTopBusiness
+
+	input file1 : /user/vyoma/review.txt			-- the location of the input file (review.csv) on your hadoop system
+	input file2 : /user/vyoma/business.csv			-- the location of the input file (business.csv) on your hadoop system
+	intermediate file : /user/vyoma/temp			-- it is an intermediate direcory we create for implementing reduce side join
+	output file : /user/vyoma/outTopBusiness		-- the location where you want to store your output file on the hadoop system
+
+   hdfs dfs -get /user/vyoma/outTopBusiness			-- this command will get the output file to your local system in the same 									   directory as your jar from where you can view the output
+
+4) Implement in memory join.
+hadoop jar findPaloAlto.jar /user/vyoma/review.csv /user/vyoma/business.csv /user/vyoma/outFindPaloAlto
+
+	input file1 : /user/vyoma/review.txt			-- the location of the input file (review.csv i.e the larger one) on your hadoop system
+	input file2 : /user/vyoma/business.csv			-- the location of the input file (business.csv) on your hadoop system
+	output file : /user/vyoma/outFindPaloAlto		-- the location where you want to store your output file on the hadoop system
+
+   hdfs dfs -get /user/vyoma/outFindPaloAlto			-- this command will get the output file to your local system in the same 									   directory as your jar from where you can view the output
+	
